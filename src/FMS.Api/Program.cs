@@ -1,3 +1,4 @@
+using FMS.Api.Endpoints;
 using FMS.Application.Configuration;
 using FMS.Application.Interfaces;
 using FMS.Infrastructure;
@@ -40,6 +41,14 @@ try
     // Infrastructure layer (EF Core, PostgreSQL, services)
     // -----------------------------------------------------------------------
     builder.Services.AddInfrastructure(builder.Configuration);
+
+    // -----------------------------------------------------------------------
+    // JSON serialization: camelCase + enums as strings
+    // -----------------------------------------------------------------------
+    builder.Services.ConfigureHttpJsonOptions(options =>
+    {
+        options.SerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 
     // -----------------------------------------------------------------------
     // Health checks
@@ -134,6 +143,12 @@ try
     })
     .WithName("Bootstrap")
     .WithTags("system");
+
+    // Domain CRUD endpoints
+    app.MapEventEndpoints();
+    app.MapTeamEndpoints();
+    app.MapParticipantEndpoints();
+    app.MapFightEndpoints();
 
     app.Run();
 }

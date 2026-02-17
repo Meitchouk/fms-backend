@@ -1,10 +1,10 @@
+using FMS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.Persistence;
 
 /// <summary>
 /// Main EF Core DbContext for the FMS system.
-/// All domain entities will be registered here as the system evolves.
 /// </summary>
 public class FmsDbContext : DbContext
 {
@@ -12,6 +12,13 @@ public class FmsDbContext : DbContext
         : base(options)
     {
     }
+
+    public DbSet<Event> Events => Set<Event>();
+    public DbSet<Team> Teams => Set<Team>();
+    public DbSet<Participant> Participants => Set<Participant>();
+    public DbSet<Fight> Fights => Set<Fight>();
+    public DbSet<FightResult> FightResults => Set<FightResult>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
