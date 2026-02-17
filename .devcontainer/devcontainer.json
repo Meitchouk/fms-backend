@@ -1,0 +1,31 @@
+{
+  "name": "fms-backend",
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.devcontainer.yml"],
+  "service": "fms-devcontainer",
+  "workspaceFolder": "/workspaces/fms-backend",
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "8.0"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-docker",
+        "humao.rest-client",
+        "EditorConfig.EditorConfig"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "FMS.sln"
+      }
+    }
+  },
+  "forwardPorts": [5000, 5001, 5434],
+  "postCreateCommand": "dotnet restore FMS.sln",
+  "remoteUser": "vscode"
+}

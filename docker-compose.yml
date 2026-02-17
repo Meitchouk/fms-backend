@@ -1,0 +1,22 @@
+services:
+  fms-postgres:
+    image: postgres:16-alpine
+    container_name: fms-postgres
+    restart: unless-stopped
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: fms
+      POSTGRES_PASSWORD: fms_dev_password
+      POSTGRES_DB: fms
+    volumes:
+      - fms-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fms -d fms"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  fms-pgdata:
+    driver: local

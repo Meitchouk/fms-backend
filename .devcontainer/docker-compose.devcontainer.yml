@@ -1,0 +1,9 @@
+services:
+  fms-devcontainer:
+    image: mcr.microsoft.com/devcontainers/dotnet:8.0
+    volumes:
+      - ..:/workspaces/fms-backend:cached
+    command: sleep infinity
+    depends_on:
+      fms-postgres:
+        condition: service_healthy
